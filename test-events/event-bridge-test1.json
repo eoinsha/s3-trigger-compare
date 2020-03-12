@@ -1,0 +1,71 @@
+{
+	"version": "0",
+	"id": "bb5061b3-54e7-11fe-e59b-f84f49a950e8",
+	"detail-type": "AWS API Call via CloudTrail",
+	"source": "aws.s3",
+	"account": "545667025386",
+	"time": "2020-03-03T10:56:08Z",
+	"region": "eu-west-1",
+	"resources": [],
+	"detail": {
+		"eventVersion": "1.07",
+		"userIdentity": {
+			"type": "AssumedRole",
+			"principalId": "AROAX6DCKBHVOO4S4MHPS:botocore-session-1583232604",
+			"arn": "arn:aws:sts::545667025386:assumed-role/OrganizationAccountAccessRole/botocore-session-1583232604",
+			"accountId": "545667025386",
+			"accessKeyId": "ASIAX6DCKBHVIZTWOCVQ",
+			"sessionContext": {
+				"sessionIssuer": {
+					"type": "Role",
+					"principalId": "AROAX6DCKBHVOO4S4MHPS",
+					"arn": "arn:aws:iam::545667025386:role/OrganizationAccountAccessRole",
+					"accountId": "545667025386",
+					"userName": "OrganizationAccountAccessRole"
+				},
+				"attributes": {
+					"creationDate": "2020-03-03T10:50:05Z",
+					"mfaAuthenticated": "false"
+				}
+			}
+		},
+		"eventTime": "2020-03-03T10:56:08Z",
+		"eventSource": "s3.amazonaws.com",
+		"eventName": "PutObject",
+		"awsRegion": "eu-west-1",
+		"sourceIPAddress": "213.233.155.167",
+		"userAgent": "[aws-cli/1.16.210 Python/3.7.6 Darwin/19.2.0 botocore/1.12.200]",
+		"requestParameters": {
+			"bucketName": "sam-s3-triggers",
+			"Host": "sam-s3-triggers.s3.eu-west-1.amazonaws.com",
+			"key": "uploads/test1.txt"
+		},
+		"responseElements": null,
+		"additionalEventData": {
+			"SignatureVersion": "SigV4",
+			"CipherSuite": "ECDHE-RSA-AES128-GCM-SHA256",
+			"bytesTransferredIn": 3,
+			"AuthenticationMethod": "AuthHeader",
+			"x-amz-id-2": "Zj0gfmAAkVx+PmmO0URvZ6FdLdUHWm23EoshDWYPwwV5NB61H5RTlKFlKA3jvq2JnrL8QD1wEbg=",
+			"bytesTransferredOut": 0
+		},
+		"requestID": "5C8C41820671E81C",
+		"eventID": "092081d9-9fff-4bbd-99e4-29cb68681351",
+		"readOnly": false,
+		"resources": [
+			{
+				"type": "AWS::S3::Object",
+				"ARN": "arn:aws:s3:::sam-s3-triggers/uploads/test1.txt"
+			},
+			{
+				"accountId": "545667025386",
+				"type": "AWS::S3::Bucket",
+				"ARN": "arn:aws:s3:::sam-s3-triggers"
+			}
+		],
+		"eventType": "AwsApiCall",
+		"managementEvent": false,
+		"recipientAccountId": "545667025386",
+		"eventCategory": "Data"
+	}
+}

@@ -1,0 +1,79 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  s3-trigger-compare
+
+  Compare methods to trigger a Lambda when an S3 Object is created
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  TriggerBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: s3-trigger-compare
+
+  NotificationFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: handlers/
+      Handler: notification.handleS3Notification
+      Runtime: nodejs12.x
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - s3:GetObject
+              Resource:
+                - arn:aws:s3:::s3-trigger-compare/uploads/*
+      Events:
+        NotificationEvent:
+          Type: S3
+          Properties:
+            Bucket: !Ref TriggerBucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: prefix
+                    Value: 'uploads/'
+
+  EventBridgeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: handlers/
+      Handler: event-bridge.handleEvent
+      Runtime: nodejs12.x
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - s3:GetObject
+              Resource:
+                - arn:aws:s3:::s3-trigger-compare/uploads/*
+      Events:
+        EventBridgeEvent:
+          Type: EventBridgeRule
+          Properties:
+            Pattern:
+              source:
+                - aws.s3
+              detail-type:
+                - AWS API Call via CloudTrail
+              detail:
+                eventSource:
+                  - s3.amazonaws.com
+                eventName:
+                  - CopyObject
+                  - PutObject
+                  - CompleteMultipartUpload
+                  - RestoreObject
+                requestParameters:
+                  bucketName:
+                    - !Ref TriggerBucket
+                  key:
+                    - prefix: 'uploads/'

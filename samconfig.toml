@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "sam-s3-triggers"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-g2ropecazrsp"
+s3_prefix = "sam-s3-triggers"
+region = "eu-west-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+
